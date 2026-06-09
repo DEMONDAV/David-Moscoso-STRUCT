@@ -5,15 +5,14 @@
 #define NOTA_MAXIMA 10.0
 #define NOTA_APROBATORIA 6.0
 
-// NUEVO: Definición de la estructura
 typedef struct {
     float calificaciones[ASIGNATURAS];
 } Estudiante;
 
-// Las funciones se quedan igual temporalmente en sus prototipos
-void cargarCalificaciones(int n, float *ptr);
-void procesarEstudiantes(int n, float *ptr);
-void procesarAsignaturas(int n, float *ptr);
+// MODIFICADO: Firmas actualizadas con el struct
+void cargarCalificaciones(int n, Estudiante *lista);
+void procesarEstudiantes(int n, Estudiante *lista);
+void procesarAsignaturas(int n, Estudiante *lista);
 
 int main() {
     int numEstudiantes;
@@ -30,18 +29,19 @@ int main() {
         }
     } while (numEstudiantes <= 0);
 
-    // MODIFICADO: Ahora es un arreglo de estructuras
     Estudiante listaEstudiantes[numEstudiantes];
 
-    // Se envía haciendo un cast temporal para no romper las funciones viejas aún
-    cargarCalificaciones(numEstudiantes, (float *)listaEstudiantes);
-    procesarEstudiantes(numEstudiantes, (float *)listaEstudiantes);
-    procesarAsignaturas(numEstudiantes, (float *)listaEstudiantes);
+    // MODIFICADO: Llamadas limpias sin conversiones raras
+    cargarCalificaciones(numEstudiantes, listaEstudiantes);
+    procesarEstudiantes(numEstudiantes, listaEstudiantes);
+    procesarAsignaturas(numEstudiantes, listaEstudiantes);
 
     return 0;
 }
 
-void cargarCalificaciones(int n, float *ptr) {
+// MODIFICADO: Recibe Estudiante* pero usa cast interno para no romperse todavía
+void cargarCalificaciones(int n, Estudiante *lista) {
+    float *ptr = (float *)lista; 
     for (int i = 0; i < n; i++) {
         printf("\n--- Registro - Estudiante %d ---\n", i + 1);
         for (int j = 0; j < ASIGNATURAS; j++) {
@@ -60,7 +60,9 @@ void cargarCalificaciones(int n, float *ptr) {
     }
 }
 
-void procesarEstudiantes(int n, float *ptr) {
+// MODIFICADO: Adaptación interna temporal
+void procesarEstudiantes(int n, Estudiante *lista) {
+    float *ptr = (float *)lista;
     printf("\n==================================================\n");
     printf("          REPORTE GENERAL POR ESTUDIANTE          \n");
     printf("==================================================\n");
@@ -83,7 +85,9 @@ void procesarEstudiantes(int n, float *ptr) {
     }
 }
 
-void procesarAsignaturas(int n, float *ptr) {
+// MODIFICADO: Adaptación interna temporal
+void procesarAsignaturas(int n, Estudiante *lista) {
+    float *ptr = (float *)lista;
     printf("\n==================================================\n");
     printf("          REPORTE GENERAL POR ASIGNATURA          \n");
     printf("==================================================\n");
