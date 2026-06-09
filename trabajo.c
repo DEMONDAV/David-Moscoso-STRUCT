@@ -37,14 +37,11 @@ int main() {
     return 0;
 }
 
-// MODIFICADO: Lógica 100% migrada al uso de Struct y puntero flecha
 void cargarCalificaciones(int n, Estudiante *lista) {
     for (int i = 0; i < n; i++) {
         printf("\n--- Registro - Estudiante %d ---\n", i + 1);
         for (int j = 0; j < ASIGNATURAS; j++) {
-            
             float *nota = &(lista + i)->calificaciones[j]; 
-            
             do {
                 printf("  Asignatura %d: ", j + 1);
                 if (scanf("%f", nota) != 1) {
@@ -59,9 +56,8 @@ void cargarCalificaciones(int n, Estudiante *lista) {
     }
 }
 
-// Sigue con cast temporal
+// MODIFICADO: Código limpio usando propiedades del struct del estudiante i
 void procesarEstudiantes(int n, Estudiante *lista) {
-    float *ptr = (float *)lista;
     printf("\n==================================================\n");
     printf("          REPORTE GENERAL POR ESTUDIANTE          \n");
     printf("==================================================\n");
@@ -69,13 +65,12 @@ void procesarEstudiantes(int n, Estudiante *lista) {
     printf("--------------------------------------------------\n");
 
     for (int i = 0; i < n; i++) {
-        float *fila = ptr + (i * ASIGNATURAS); 
         float suma = 0;
-        float max = *fila; 
-        float min = *fila; 
+        float max = (lista + i)->calificaciones[0]; 
+        float min = (lista + i)->calificaciones[0]; 
 
         for (int j = 0; j < ASIGNATURAS; j++) {
-            float val = *(fila + j); 
+            float val = (lista + i)->calificaciones[j];
             suma += val;
             if (val > max) max = val;
             if (val < min) min = val;
