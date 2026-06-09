@@ -9,7 +9,6 @@ typedef struct {
     float calificaciones[ASIGNATURAS];
 } Estudiante;
 
-// MODIFICADO: Firmas actualizadas con el struct
 void cargarCalificaciones(int n, Estudiante *lista);
 void procesarEstudiantes(int n, Estudiante *lista);
 void procesarAsignaturas(int n, Estudiante *lista);
@@ -31,7 +30,6 @@ int main() {
 
     Estudiante listaEstudiantes[numEstudiantes];
 
-    // MODIFICADO: Llamadas limpias sin conversiones raras
     cargarCalificaciones(numEstudiantes, listaEstudiantes);
     procesarEstudiantes(numEstudiantes, listaEstudiantes);
     procesarAsignaturas(numEstudiantes, listaEstudiantes);
@@ -39,13 +37,14 @@ int main() {
     return 0;
 }
 
-// MODIFICADO: Recibe Estudiante* pero usa cast interno para no romperse todavía
+// MODIFICADO: Lógica 100% migrada al uso de Struct y puntero flecha
 void cargarCalificaciones(int n, Estudiante *lista) {
-    float *ptr = (float *)lista; 
     for (int i = 0; i < n; i++) {
         printf("\n--- Registro - Estudiante %d ---\n", i + 1);
         for (int j = 0; j < ASIGNATURAS; j++) {
-            float *nota = ptr + (i * ASIGNATURAS) + j; 
+            
+            float *nota = &(lista + i)->calificaciones[j]; 
+            
             do {
                 printf("  Asignatura %d: ", j + 1);
                 if (scanf("%f", nota) != 1) {
@@ -60,7 +59,7 @@ void cargarCalificaciones(int n, Estudiante *lista) {
     }
 }
 
-// MODIFICADO: Adaptación interna temporal
+// Sigue con cast temporal
 void procesarEstudiantes(int n, Estudiante *lista) {
     float *ptr = (float *)lista;
     printf("\n==================================================\n");
@@ -85,7 +84,7 @@ void procesarEstudiantes(int n, Estudiante *lista) {
     }
 }
 
-// MODIFICADO: Adaptación interna temporal
+// Sigue con cast temporal
 void procesarAsignaturas(int n, Estudiante *lista) {
     float *ptr = (float *)lista;
     printf("\n==================================================\n");
