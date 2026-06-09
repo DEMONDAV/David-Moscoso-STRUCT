@@ -56,7 +56,6 @@ void cargarCalificaciones(int n, Estudiante *lista) {
     }
 }
 
-// MODIFICADO: Código limpio usando propiedades del struct del estudiante i
 void procesarEstudiantes(int n, Estudiante *lista) {
     printf("\n==================================================\n");
     printf("          REPORTE GENERAL POR ESTUDIANTE          \n");
@@ -79,22 +78,22 @@ void procesarEstudiantes(int n, Estudiante *lista) {
     }
 }
 
-// Sigue con cast temporal
+// MODIFICADO: Ultima función migrada por completo
 void procesarAsignaturas(int n, Estudiante *lista) {
-    float *ptr = (float *)lista;
     printf("\n==================================================\n");
     printf("          REPORTE GENERAL POR ASIGNATURA          \n");
     printf("==================================================\n");
 
     for (int j = 0; j < ASIGNATURAS; j++) {
         float suma = 0;
-        float max = *(ptr + j); 
-        float min = *(ptr + j);
+        float max = lista->calificaciones[j]; 
+        float min = lista->calificaciones[j];
         int aprobados = 0;
 
         for (int i = 0; i < n; i++) {
-            float val = *(ptr + (i * ASIGNATURAS) + j); 
+            float val = (lista + i)->calificaciones[j]; 
             suma += val;
+            
             if (val > max) max = val;
             if (val < min) min = val;
             if (val >= NOTA_APROBATORIA) aprobados++;
